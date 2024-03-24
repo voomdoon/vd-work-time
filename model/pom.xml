@@ -4,18 +4,21 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>de.voomdoon</groupId>
-		<artifactId>vd-parent</artifactId>
+		<groupId>de.voomdoon.util</groupId>
+		<artifactId>vd-util-parent</artifactId>
 		<version>0.1.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>de.voomdoon.worktime</groupId>
-	<artifactId>work-time</artifactId>
+	<artifactId>vd-work-time-model</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 
-	<packaging>pom</packaging>
-
-	<modules>
-		<module>model</module>
-	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>de.voomdoon.testing</groupId>
+			<artifactId>vd-test-util</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
