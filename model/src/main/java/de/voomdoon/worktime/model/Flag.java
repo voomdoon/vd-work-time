@@ -5,7 +5,7 @@ package de.voomdoon.worktime.model;
  *
  * @author André Schulz
  *
- * @since DOCME add inception version number
+ * @since 0.1.0
  */
 public enum Flag {
 
@@ -73,7 +73,7 @@ public enum Flag {
 	/**
 	 * @param name
 	 *            name
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	public void setName(String name) {
 		this.name = name;

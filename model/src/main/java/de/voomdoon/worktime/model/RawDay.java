@@ -9,7 +9,7 @@ import java.util.Set;
  *
  * @author André Schulz
  *
- * @since DOCME add inception version number
+ * @since 0.1.0
  */
 public record RawDay(LocalDate date, List<RawSection> sections, Set<Flag> fullDayFlags, Set<Flag> halfDayFlags) {
 
@@ -18,7 +18,7 @@ public record RawDay(LocalDate date, List<RawSection> sections, Set<Flag> fullDa
 	 * 
 	 * @param date
 	 * @param sections
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 * @deprecated
 	 */
 	@Deprecated

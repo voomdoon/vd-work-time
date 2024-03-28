@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author André Schulz
  *
- * @since DOCME add inception version number
+ * @since 0.1.0
  */
 public record RawWork(List<RawDay> days) {
 
