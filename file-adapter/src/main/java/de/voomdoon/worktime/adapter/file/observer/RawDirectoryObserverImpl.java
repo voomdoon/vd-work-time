@@ -1,4 +1,4 @@
-package de.voomdoon.worktime.adapter.file;
+package de.voomdoon.worktime.adapter.file.observer;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +16,8 @@ import java.util.Objects;
 
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.logging.Logger;
+import de.voomdoon.worktime.adapter.file.RawDirectoryReader;
+import de.voomdoon.worktime.adapter.file.RawFileCollector;
 import de.voomdoon.worktime.model.RawDay;
 import de.voomdoon.worktime.model.RawSection;
 import de.voomdoon.worktime.model.RawWork;
@@ -27,7 +29,7 @@ import de.voomdoon.worktime.model.RawWork;
  *
  * @since 0.1.0
  */
-public class RawDirectoryObserver {
+public class RawDirectoryObserverImpl implements RawDirectoryObserver {
 
 	/**
 	 * @since 0.1.0
@@ -44,6 +46,9 @@ public class RawDirectoryObserver {
 	 */
 	private Path input;
 
+	/**
+	 * @since 0.1.0
+	 */
 	private RawListener listener;
 
 	/**
@@ -73,7 +78,7 @@ public class RawDirectoryObserver {
 	 * @throws IOException
 	 * @since 0.1.0
 	 */
-	public RawDirectoryObserver(String input) throws IOException {
+	public RawDirectoryObserverImpl(String input) throws IOException {
 		this.input = Path.of(input);
 
 		fileWorks = new HashMap<>();
@@ -101,11 +106,9 @@ public class RawDirectoryObserver {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method register
-	 * 
-	 * @param listener
 	 * @since 0.1.0
 	 */
+	@Override
 	public RawWork register(RawListener listener) {
 		Objects.requireNonNull(listener, "listener");
 		this.listener = listener;

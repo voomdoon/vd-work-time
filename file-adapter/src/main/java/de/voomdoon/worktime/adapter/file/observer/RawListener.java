@@ -1,4 +1,4 @@
-package de.voomdoon.worktime.adapter.file;
+package de.voomdoon.worktime.adapter.file.observer;
 
 import de.voomdoon.worktime.model.RawDay;
 import de.voomdoon.worktime.model.RawSection;
