@@ -9,7 +9,7 @@ import de.voomdoon.worktime.model.RawWork;
  *
  * @since 0.1.0
  */
-public interface RawDirectoryObserver {
+public interface RawObserver {
 
 	/**
 	 * DOCME add JavaDoc for method register

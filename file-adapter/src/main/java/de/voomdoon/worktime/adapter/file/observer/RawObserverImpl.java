@@ -29,7 +29,7 @@ import de.voomdoon.worktime.model.RawWork;
  *
  * @since 0.1.0
  */
-public class RawDirectoryObserverImpl implements RawDirectoryObserver {
+public class RawObserverImpl implements RawObserver {
 
 	/**
 	 * @since 0.1.0
@@ -78,7 +78,7 @@ public class RawDirectoryObserverImpl implements RawDirectoryObserver {
 	 * @throws IOException
 	 * @since 0.1.0
 	 */
-	public RawDirectoryObserverImpl(String input) throws IOException {
+	public RawObserverImpl(String input) throws IOException {
 		this.input = Path.of(input);
 
 		fileWorks = new HashMap<>();

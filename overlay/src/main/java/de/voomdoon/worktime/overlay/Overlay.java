@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.logging.Logger;
 import de.voomdoon.worktime.adapter.file.RawDirectoryReader;
-import de.voomdoon.worktime.adapter.file.observer.RawDirectoryObserver;
+import de.voomdoon.worktime.adapter.file.observer.RawObserver;
 import de.voomdoon.worktime.adapter.file.observer.RawListener;
 import de.voomdoon.worktime.model.RawDay;
 import de.voomdoon.worktime.model.RawSection;
@@ -67,7 +67,7 @@ public class Overlay {
 	/**
 	 * @since 0.1.0
 	 */
-	private RawDirectoryObserver observer;
+	private RawObserver observer;
 
 	/**
 	 * @since 0.1.0
@@ -80,7 +80,7 @@ public class Overlay {
 	 * @param observer
 	 * @since 0.1.0
 	 */
-	public Overlay(RawDirectoryObserver observer) {
+	public Overlay(RawObserver observer) {
 		this.observer = observer;
 	}
 

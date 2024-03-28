@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
-import de.voomdoon.worktime.adapter.file.observer.RawDirectoryObserverImpl;
+import de.voomdoon.worktime.adapter.file.observer.RawObserverImpl;
 import de.voomdoon.worktime.adapter.file.observer.RawListener;
 import de.voomdoon.worktime.model.RawDay;
 import de.voomdoon.worktime.model.RawSection;
@@ -48,7 +48,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 		/**
 		 * @since 0.1.0
 		 */
-		private RawDirectoryObserver observer;
+		private RawObserver observer;
 
 		/**
 		 * @since 0.1.0
@@ -57,7 +57,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 		void test_error_NPE() throws Exception {
 			logTestStart();
 
-			observer = new RawDirectoryObserverImpl(ANY_FILE);
+			observer = new RawObserverImpl(ANY_FILE);
 
 			NullPointerException actual = assertThrows(NullPointerException.class, () -> observer.register(null));
 			assertThat(actual).hasMessageContaining("listener");
@@ -70,7 +70,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 		void test_result() throws Exception {
 			logTestStart();
 
-			observer = new RawDirectoryObserverImpl(ANY_FILE);
+			observer = new RawObserverImpl(ANY_FILE);
 
 			RawListener listener = new NoOpRawListener() {
 
@@ -93,7 +93,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 		void test_success() throws Exception {
 			logTestStart();
 
-			observer = new RawDirectoryObserverImpl(ANY_FILE);
+			observer = new RawObserverImpl(ANY_FILE);
 
 			RawListener listener = new NoOpRawListener() {
 
@@ -135,7 +135,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 	/**
 	 * @since 0.1.0
 	 */
-	private RawDirectoryObserverImpl observer;
+	private RawObserverImpl observer;
 
 	/**
 	 * @since 0.1.0
@@ -150,7 +150,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 		bw.write("12:00\t");
 		bw.close();
 
-		observer = new RawDirectoryObserverImpl(fileName);
+		observer = new RawObserverImpl(fileName);
 
 		AtomicReference<RawSection> sectionReference = new AtomicReference<>();
 
@@ -187,7 +187,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 		bw.write("12:00\t13:00\n");
 		bw.close();
 
-		observer = new RawDirectoryObserverImpl(fileName);
+		observer = new RawObserverImpl(fileName);
 
 		AtomicReference<RawSection> sectionReference = new AtomicReference<>();
 

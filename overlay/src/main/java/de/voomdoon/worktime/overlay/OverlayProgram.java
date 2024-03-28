@@ -1,8 +1,8 @@
 package de.voomdoon.worktime.overlay;
 
 import de.voomdoon.util.cli.Program;
-import de.voomdoon.worktime.adapter.file.observer.RawDirectoryObserver;
-import de.voomdoon.worktime.adapter.file.observer.RawDirectoryObserverImpl;
+import de.voomdoon.worktime.adapter.file.observer.RawObserver;
+import de.voomdoon.worktime.adapter.file.observer.RawObserverImpl;
 
 /**
  * DOCME add JavaDoc for
@@ -27,7 +27,7 @@ public class OverlayProgram extends Program {
 	@Override
 	protected void runProgram() throws Exception {
 		String input = pollArg("input");
-		RawDirectoryObserver observer = new RawDirectoryObserverImpl(input);
+		RawObserver observer = new RawObserverImpl(input);
 		Overlay overlay = new Overlay(observer);
 		overlay.start();
 	}
