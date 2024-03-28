@@ -12,12 +12,12 @@ import de.voomdoon.util.cli.Program;
  *
  * @author André Schulz
  *
- * @since DOCME add inception version number
+ * @since 0.1.0
  */
 public class WorkTimeOverlayMainProgram extends MainBase {
 
 	/**
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	private static final Map<String, Class<?>> MAINS;
 
@@ -31,7 +31,7 @@ public class WorkTimeOverlayMainProgram extends MainBase {
 	 * DOCME add JavaDoc for method main
 	 * 
 	 * @param args
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	public static void main(String[] args) {
 		Program.run(args);
@@ -41,14 +41,14 @@ public class WorkTimeOverlayMainProgram extends MainBase {
 	 * DOCME add JavaDoc for constructor WorkTimeOverlayMainProgram
 	 * 
 	 * @param args
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	protected WorkTimeOverlayMainProgram(String[] args) {
 		super(args, MAINS);
 	}
 
 	/**
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	@Override
 	protected String getName() {
