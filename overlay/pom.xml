@@ -14,7 +14,7 @@
 	<version>0.1.0-SNAPSHOT</version>
 
 	<properties>
-		<toolMainClass>de.voomdoon.worktime.overlay.WorkTimeOverlayMainProgram</toolMainClass>
+		<toolMainClass>de.voomdoon.worktime.overlay.OverlayProgram</toolMainClass>
 	</properties>
 
 	<dependencies>
