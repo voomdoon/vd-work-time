@@ -14,8 +14,6 @@ import de.voomdoon.worktime.adapter.file.observer.RawDirectoryObserverImpl;
 public class OverlayProgram extends Program {
 
 	/**
-	 * DOCME add JavaDoc for method main
-	 * 
 	 * @param args
 	 * @since 0.1.0
 	 */
@@ -26,25 +24,9 @@ public class OverlayProgram extends Program {
 	/**
 	 * @since 0.1.0
 	 */
-	private String input;
-
-	/**
-	 * DOCME add JavaDoc for constructor OverlayProgram
-	 * 
-	 * @param args
-	 * @since 0.1.0
-	 */
-	protected OverlayProgram(String[] args) {
-		super(args);
-
-		input = args[0];
-	}
-
-	/**
-	 * @since 0.1.0
-	 */
 	@Override
 	protected void runProgram() throws Exception {
+		String input = pollArg("input");
 		RawDirectoryObserver observer = new RawDirectoryObserverImpl(input);
 		Overlay overlay = new Overlay(observer);
 		overlay.start();
