@@ -46,6 +46,20 @@ class RawFileCollectorTest {
 		}
 
 		/**
+		 * @since DOCME add inception version number
+		 */
+		@Test
+		void test_directory_filterFiles() throws Exception {
+			logTestStart();
+
+			RawFileCollector collector = new RawFileCollector();
+
+			Collection<Path> actuals = collector.findFiles(Path.of("src/test/resources/raw/directory/otherFile"));
+
+			assertThat(actuals).containsExactly(Path.of("src/test/resources/raw/directory/otherFile/1.txt"));
+		}
+
+		/**
 		 * @since 0.1.0
 		 */
 		@Test

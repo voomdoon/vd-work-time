@@ -58,7 +58,9 @@ public class RawFileCollector {
 	 */
 	private void processFileOrDirectory(File fileOrDirectory, Collection<Path> result) throws IOException {
 		if (fileOrDirectory.isFile()) {
-			result.add(fileOrDirectory.toPath());
+			if (fileOrDirectory.getName().endsWith(".txt")) {
+				result.add(fileOrDirectory.toPath());
+			}
 		} else if (fileOrDirectory.isDirectory()) {
 			processDirectory(fileOrDirectory, result);
 		} else {
