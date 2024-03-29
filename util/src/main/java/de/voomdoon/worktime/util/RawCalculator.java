@@ -67,6 +67,6 @@ public class RawCalculator {
 	 * @since 0.1.0
 	 */
 	private int sumDay(RawDay day, LocalTime now) {
-		return day.sections().stream().findAny().map(section -> getDuration(section, now)).get();
+		return day.sections().stream().map(section -> getDuration(section, now)).reduce(0, Integer::sum);
 	}
 }

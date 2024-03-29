@@ -78,4 +78,36 @@ class RawCalculatorTest extends TestBase {
 
 		assertThat(actual).isEqualTo(3600);
 	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Test
+	void test_openEndAtSecondSection() throws Exception {
+		logTestStart();
+
+		RawDay day = new RawDay(DAY1, List.of(new RawSection(LocalTime.of(12, 0), LocalTime.of(13, 0), 1),
+				new RawSection(LocalTime.of(14, 0), null, 1)), Set.of(), Set.of());
+		RawWork work = new RawWork(List.of(day));
+
+		int actual = summarizer.getDaySum(work, DAY1, LocalTime.of(15, 0));
+
+		assertThat(actual).isEqualTo(7200);
+	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Test
+	void test_twoSections() throws Exception {
+		logTestStart();
+
+		RawDay day = new RawDay(DAY1, List.of(new RawSection(LocalTime.of(12, 0), LocalTime.of(13, 0), 1),
+				new RawSection(LocalTime.of(14, 0), LocalTime.of(15, 0), 1)), Set.of(), Set.of());
+		RawWork work = new RawWork(List.of(day));
+
+		int actual = summarizer.getDaySum(work, DAY1, LocalTime.of(15, 0));
+
+		assertThat(actual).isEqualTo(7200);
+	}
 }
