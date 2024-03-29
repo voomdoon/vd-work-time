@@ -42,7 +42,7 @@ class RawCalculatorTest extends TestBase {
 
 		RawWork work = new RawWork(List.of());
 
-		int actual = summarizer.getDaySum(work, DAY1);
+		int actual = summarizer.getDaySum(work, DAY1, LocalTime.now());
 
 		assertThat(actual).isZero();
 	}
@@ -58,7 +58,23 @@ class RawCalculatorTest extends TestBase {
 		RawDay day = new RawDay(DAY1, List.of(section), Set.of(), Set.of());
 		RawWork work = new RawWork(List.of(day));
 
-		int actual = summarizer.getDaySum(work, DAY1);
+		int actual = summarizer.getDaySum(work, DAY1, LocalTime.now());
+
+		assertThat(actual).isEqualTo(3600);
+	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Test
+	void test_openEnd() throws Exception {
+		logTestStart();
+
+		RawSection section = new RawSection(LocalTime.of(12, 0), null, 1);
+		RawDay day = new RawDay(DAY1, List.of(section), Set.of(), Set.of());
+		RawWork work = new RawWork(List.of(day));
+
+		int actual = summarizer.getDaySum(work, DAY1, LocalTime.of(13, 0));
 
 		assertThat(actual).isEqualTo(3600);
 	}
