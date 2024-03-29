@@ -1,13 +1,9 @@
 package de.voomdoon.worktime.overlay;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.logging.Logger;
-import de.voomdoon.worktime.adapter.file.RawDirectoryReader;
-import de.voomdoon.worktime.adapter.file.observer.RawObserver;
 import de.voomdoon.worktime.adapter.file.observer.RawListener;
+import de.voomdoon.worktime.adapter.file.observer.RawObserver;
 import de.voomdoon.worktime.model.RawDay;
 import de.voomdoon.worktime.model.RawSection;
 import de.voomdoon.worktime.model.RawWork;
@@ -35,8 +31,8 @@ public class Overlay {
 		 */
 		@Override
 		public void notifySectionEnded(RawSection section, RawDay day, RawWork work) {
+			logger.info("notifySectionEnded " + section);
 			// TODO implement notifySectionEnded
-			throw new UnsupportedOperationException("'notifySectionEnded' not implemented at 'RawListener'!");
 		}
 
 		/**
@@ -44,8 +40,8 @@ public class Overlay {
 		 */
 		@Override
 		public void notifySectionStarted(RawSection section, RawDay day, RawWork work) {
+			logger.info("notifySectionStarted " + section);
 			// TODO implement notifySectionStarted
-			throw new UnsupportedOperationException("'notifySectionStarted' not implemented at 'RawListener'!");
 		}
 	}
 
@@ -68,11 +64,6 @@ public class Overlay {
 	 * @since 0.1.0
 	 */
 	private RawObserver observer;
-
-	/**
-	 * @since 0.1.0
-	 */
-	private RawDirectoryReader reader = new RawDirectoryReader();
 
 	/**
 	 * DOCME add JavaDoc for constructor Overlay
@@ -102,20 +93,5 @@ public class Overlay {
 	 */
 	public void stop() {
 		// TODO implement stop
-	}
-
-	/**
-	 * DOCME add JavaDoc for method read
-	 * 
-	 * @return
-	 * @since 0.1.0
-	 */
-	private RawWork read() {
-		try {
-			return reader.readDirectory(Path.of(input));
-		} catch (IOException e) {
-			// TODO implement error handling
-			throw new RuntimeException("Error at 'Overlay': " + e.getMessage(), e);
-		}
 	}
 }
