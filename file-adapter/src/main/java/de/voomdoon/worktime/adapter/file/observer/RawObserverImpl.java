@@ -117,7 +117,7 @@ public class RawObserverImpl implements RawObserver {
 		// TODO implement register
 
 		try {
-			globalWork = reader.readDirectory(input);// TOTO rework
+			globalWork = reader.readDirectory(input);// TODO rework
 		} catch (IOException e) {
 			// TODO implement error handling
 			throw new RuntimeException("Error at 'register': " + e.getMessage(), e);
@@ -130,8 +130,11 @@ public class RawObserverImpl implements RawObserver {
 	 * DOCME add JavaDoc for method run
 	 * 
 	 * @since 0.1.0
+	 * @deprecated TODO use timer instead
 	 */
+	@Deprecated
 	void run() {
+		logger.trace("run");
 		WatchKey watchKey;
 
 		while ((watchKey = watchService.poll()) != null) {
@@ -146,9 +149,9 @@ public class RawObserverImpl implements RawObserver {
 			for (Path file : files) {
 				processFile(file);
 			}
-		}
 
-		// TODO implement run
+			watchKey.reset();
+		}
 	}
 
 	/**
@@ -203,6 +206,7 @@ public class RawObserverImpl implements RawObserver {
 		logger.debug("newWork:     " + newWork);
 
 		processFileWork(file, currentWork, newWork);
+		fileWorks.put(file, newWork);
 		// TODO implement processFile
 	}
 
@@ -259,8 +263,11 @@ public class RawObserverImpl implements RawObserver {
 	 */
 	private void publishSectionEnded(Path file, RawSection currSection, RawSection newSection, RawDay newDay,
 			RawWork newWork) {
-		listener.notifySectionEnded(newSection, newDay, newWork);
-		// TODO implement publishSectionEnded
+		try {
+			listener.notifySectionEnded(newSection, newDay, newWork);
+		} catch (Exception e) {
+			logger.warn("notifySectionEnded: " + e.getMessage(), e);
+		}
 	}
 
 	/**
@@ -272,6 +279,10 @@ public class RawObserverImpl implements RawObserver {
 	 * @since 0.1.0
 	 */
 	private void publishSectionStarted(RawDay newDay, RawWork newWork, RawSection newSection) {
-		listener.notifySectionStarted(newSection, newDay, newWork);
+		try {
+			listener.notifySectionStarted(newSection, newDay, newWork);
+		} catch (Exception e) {
+			logger.warn("publishSectionStarted: " + e.getMessage(), e);
+		}
 	}
 }
