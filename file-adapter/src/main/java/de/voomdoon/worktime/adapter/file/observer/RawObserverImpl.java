@@ -22,6 +22,8 @@ import de.voomdoon.worktime.model.RawDay;
 import de.voomdoon.worktime.model.RawSection;
 import de.voomdoon.worktime.model.RawWork;
 
+//FIXME observe file only if given
+
 /**
  * DOCME add JavaDoc for
  *
