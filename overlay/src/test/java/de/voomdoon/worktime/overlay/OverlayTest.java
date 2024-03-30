@@ -9,8 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
-import de.voomdoon.worktime.adapter.file.observer.RawObserver;
 import de.voomdoon.worktime.adapter.file.observer.RawListener;
+import de.voomdoon.worktime.adapter.file.observer.RawObserver;
 import de.voomdoon.worktime.model.RawWork;
 
 /**
@@ -35,6 +35,14 @@ class OverlayTest extends LoggingCheckingTestBase {
 		@Override
 		public RawWork register(RawListener listener) {
 			return null;
+		}
+
+		/**
+		 * @since 0.1.0
+		 */
+		@Override
+		public void run() {
+			// nothing to do
 		}
 	}
 
@@ -77,7 +85,7 @@ class OverlayTest extends LoggingCheckingTestBase {
 
 		AtomicInteger registerCount = new AtomicInteger();
 
-		RawObserver observer = new RawObserver() {
+		RawObserver observer = new NoOpRawDirectoryObserver() {
 
 			@Override
 			public RawWork register(RawListener listener) {
