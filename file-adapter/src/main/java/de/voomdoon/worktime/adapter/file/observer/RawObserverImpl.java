@@ -133,7 +133,7 @@ public class RawObserverImpl implements RawObserver {
 	 * @deprecated TODO use timer instead
 	 */
 	@Deprecated
-	void run() {
+	public void run() {
 		logger.trace("run");
 		WatchKey watchKey;
 

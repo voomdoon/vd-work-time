@@ -12,6 +12,13 @@ import de.voomdoon.worktime.model.RawWork;
 public interface RawObserver {
 
 	/**
+	 * @since 0.1.0
+	 * @deprecated XXX temporary solution until observer is polling itself
+	 */
+	@Deprecated
+	public void run();
+
+	/**
 	 * DOCME add JavaDoc for method register
 	 * 
 	 * @param listener
