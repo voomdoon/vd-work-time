@@ -25,7 +25,7 @@ public class OverlayProgram extends Program {
 	 * @since 0.1.0
 	 */
 	@Override
-	protected void runProgram() throws Exception {
+	protected void run() throws Exception {
 		String input = pollArg("input");
 		RawObserver observer = new RawObserverImpl(input);
 		Overlay overlay = new Overlay(observer);
