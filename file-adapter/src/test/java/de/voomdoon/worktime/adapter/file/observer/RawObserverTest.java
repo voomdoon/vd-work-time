@@ -60,7 +60,8 @@ class RawObserverTest extends LoggingCheckingTestBase {
 
 			observer = new RawObserverImpl(ANY_FILE);
 
-			NullPointerException actual = assertThrows(NullPointerException.class, () -> observer.register(null));
+			NullPointerException actual = assertThrows(NullPointerException.class,
+					() -> observer.register(null, INTERVAL));
 			assertThat(actual).hasMessageContaining("listener");
 		}
 
@@ -81,7 +82,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 				}
 			};
 
-			RawWork actual = observer.register(listener);
+			RawWork actual = observer.register(listener, INTERVAL);
 
 			assertThat(actual).extracting(RawWork::days)//
 					.asInstanceOf(InstanceOfAssertFactories.LIST).hasSize(1);
@@ -104,7 +105,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 				}
 			};
 
-			assertDoesNotThrow(() -> observer.register(listener));
+			assertDoesNotThrow(() -> observer.register(listener, INTERVAL));
 		}
 	}
 
@@ -132,6 +133,13 @@ class RawObserverTest extends LoggingCheckingTestBase {
 	 * @since 0.1.0
 	 */
 	private static final boolean APPEND = true;
+
+	/**
+	 * [ms]
+	 * 
+	 * @since 0.1.0
+	 */
+	private static final int INTERVAL = 1000;
 
 	/**
 	 * @since 0.1.0
@@ -169,7 +177,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 			}
 		};
 
-		observer.register(listener);
+		observer.register(listener, INTERVAL);
 
 		logger.trace("write...");
 		bw = new BufferedWriter(new FileWriter(fileName, APPEND));
@@ -178,7 +186,6 @@ class RawObserverTest extends LoggingCheckingTestBase {
 		logger.trace("write done");
 
 		await().atMost(10, TimeUnit.SECONDS).untilAsserted(() -> {
-			observer.run();
 			assumeThat(sectionsEnded).hasSize(1).element(0).extracting(RawSection::end)
 					.isEqualTo(LocalTime.parse("13:00"));
 		});
@@ -190,7 +197,6 @@ class RawObserverTest extends LoggingCheckingTestBase {
 		logger.trace("write done");
 
 		await().atMost(10, TimeUnit.SECONDS).untilAsserted(() -> {
-			observer.run();
 			assertThat(sectionStartedReference.get()).extracting(RawSection::start).isEqualTo(LocalTime.parse("14:00"));
 		});
 
@@ -222,14 +228,13 @@ class RawObserverTest extends LoggingCheckingTestBase {
 			}
 		};
 
-		observer.register(listener);
+		observer.register(listener, 1000);
 
 		bw = new BufferedWriter(new FileWriter(fileName, APPEND));
 		bw.write("13:00\n");
 		bw.close();
 
 		await().atMost(10, TimeUnit.SECONDS).untilAsserted(() -> {
-			observer.run();
 			assertThat(sectionReference.get()).extracting(RawSection::end).isEqualTo(LocalTime.parse("13:00"));
 		});
 	}
@@ -259,14 +264,13 @@ class RawObserverTest extends LoggingCheckingTestBase {
 			}
 		};
 
-		observer.register(listener);
+		observer.register(listener, 1000);
 
 		bw = new BufferedWriter(new FileWriter(fileName, APPEND));
 		bw.write("14:00\t");
 		bw.close();
 
 		await().atMost(10, TimeUnit.SECONDS).untilAsserted(() -> {
-			observer.run();
 			assertThat(sectionReference.get()).extracting(RawSection::start).isEqualTo(LocalTime.parse("14:00"));
 		});
 	}

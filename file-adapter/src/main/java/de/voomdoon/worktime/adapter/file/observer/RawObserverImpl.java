@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.logging.Logger;
@@ -111,10 +113,20 @@ public class RawObserverImpl implements RawObserver {
 	 * @since 0.1.0
 	 */
 	@Override
-	public RawWork register(RawListener listener) {
+	public RawWork register(RawListener listener, long interval) {
 		Objects.requireNonNull(listener, "listener");
 		this.listener = listener;
 		// TODO implement register
+
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+
+			@Override
+			public void run() {
+				RawObserverImpl.this.run();
+			}
+		};
+		timer.scheduleAtFixedRate(task, 0, interval);
 
 		try {
 			globalWork = reader.readDirectory(input);// TODO rework
@@ -124,34 +136,6 @@ public class RawObserverImpl implements RawObserver {
 		}
 
 		return globalWork;
-	}
-
-	/**
-	 * DOCME add JavaDoc for method run
-	 * 
-	 * @since 0.1.0
-	 * @deprecated TODO use timer instead
-	 */
-	@Deprecated
-	public void run() {
-		logger.trace("run");
-		WatchKey watchKey;
-
-		while ((watchKey = watchService.poll()) != null) {
-			logger.debug("watchKey: " + watchKey);
-			List<WatchEvent<?>> events = watchKey.pollEvents();
-			Path directory = watchKeys.get(watchKey);
-			logger.debug("directory: " + directory);
-			logger.debug("events: " + events.stream().map(e -> e.context()).toList());
-			List<Path> files = events.stream().map(e -> Path.of(directory.toString(), e.context().toString())).toList();
-			logger.debug("files: " + files);
-
-			for (Path file : files) {
-				processFile(file);
-			}
-
-			watchKey.reset();
-		}
 	}
 
 	/**
@@ -283,6 +267,34 @@ public class RawObserverImpl implements RawObserver {
 			listener.notifySectionStarted(newSection, newDay, newWork);
 		} catch (Exception e) {
 			logger.warn("publishSectionStarted: " + e.getMessage(), e);
+		}
+	}
+
+	/**
+	 * DOCME add JavaDoc for method run
+	 * 
+	 * @since 0.1.0
+	 * @deprecated TODO use timer instead
+	 */
+	@Deprecated
+	private void run() {
+		logger.trace("run");
+		WatchKey watchKey;
+
+		while ((watchKey = watchService.poll()) != null) {
+			logger.debug("watchKey: " + watchKey);
+			List<WatchEvent<?>> events = watchKey.pollEvents();
+			Path directory = watchKeys.get(watchKey);
+			logger.debug("directory: " + directory);
+			logger.debug("events: " + events.stream().map(e -> e.context()).toList());
+			List<Path> files = events.stream().map(e -> Path.of(directory.toString(), e.context().toString())).toList();
+			logger.debug("files: " + files);
+
+			for (Path file : files) {
+				processFile(file);
+			}
+
+			watchKey.reset();
 		}
 	}
 }

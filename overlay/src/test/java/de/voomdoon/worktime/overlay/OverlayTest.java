@@ -33,16 +33,8 @@ class OverlayTest extends LoggingCheckingTestBase {
 		 * @since 0.1.0
 		 */
 		@Override
-		public RawWork register(RawListener listener) {
+		public RawWork register(RawListener listener, long interval) {
 			return null;
-		}
-
-		/**
-		 * @since 0.1.0
-		 */
-		@Override
-		public void run() {
-			// nothing to do
 		}
 	}
 
@@ -88,7 +80,7 @@ class OverlayTest extends LoggingCheckingTestBase {
 		RawObserver observer = new NoOpRawDirectoryObserver() {
 
 			@Override
-			public RawWork register(RawListener listener) {
+			public RawWork register(RawListener listener, long interval) {
 				registerCount.incrementAndGet();
 
 				return null;

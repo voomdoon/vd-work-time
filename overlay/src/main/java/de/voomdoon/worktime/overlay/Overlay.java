@@ -102,11 +102,11 @@ public class Overlay {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			try {
-				observer.run();
-			} catch (Exception exception) {
-				logger.error("observer: " + exception.getMessage(), exception);
-			}
+			// try {
+			// observer.run();
+			// } catch (Exception exception) {
+			// logger.error("observer: " + exception.getMessage(), exception);
+			// }
 
 			repaint();
 		}
@@ -181,7 +181,7 @@ public class Overlay {
 	 */
 	public void start() {
 		listener = new Listener();
-		RawWork work = observer.register(listener);
+		RawWork work = observer.register(listener, 1000);
 		logger.debug("work: " + work);
 		workReference.set(work);
 	}
