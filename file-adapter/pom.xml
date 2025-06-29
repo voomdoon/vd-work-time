@@ -16,7 +16,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.voomdoon.worktime</groupId>
-			<artifactId>work-time-model</artifactId>
+			<artifactId>vd-work-time-model</artifactId>
 			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
