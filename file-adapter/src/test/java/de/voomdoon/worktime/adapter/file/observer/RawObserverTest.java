@@ -17,7 +17,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+import de.voomdoon.testing.file.TempFileExtension;
+import de.voomdoon.testing.file.TempInputFile;
 import de.voomdoon.testing.logging.tests.LoggingCheckingTestBase;
 import de.voomdoon.worktime.model.RawDay;
 import de.voomdoon.worktime.model.RawSection;
@@ -30,6 +33,7 @@ import de.voomdoon.worktime.model.RawWork;
  *
  * @since 0.1.0
  */
+@ExtendWith(TempFileExtension.class)
 class RawObserverTest extends LoggingCheckingTestBase {
 
 	/**
@@ -150,16 +154,15 @@ class RawObserverTest extends LoggingCheckingTestBase {
 	 * @since 0.1.0
 	 */
 	@Test
-	void test_consecutiveChanges() throws Exception {
+	void test_consecutiveChanges(@TempInputFile String input) throws Exception {
 		logTestStart();
 
-		String fileName = getTempDirectory() + "/file.txt";
-		BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(input));
 		bw.write("2024-01-01\n");
 		bw.write("12:00\t");
 		bw.close();
 
-		observer = new RawObserverImpl(fileName);
+		observer = new RawObserverImpl(input);
 
 		List<RawSection> sectionsEnded = new ArrayList<>();
 		AtomicReference<RawSection> sectionStartedReference = new AtomicReference<>();
@@ -180,7 +183,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 		observer.register(listener, INTERVAL);
 
 		logger.trace("write...");
-		bw = new BufferedWriter(new FileWriter(fileName, APPEND));
+		bw = new BufferedWriter(new FileWriter(input, APPEND));
 		bw.write("13:00\n");
 		bw.close();
 		logger.trace("write done");
@@ -191,7 +194,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 		});
 
 		logger.trace("write...");
-		bw = new BufferedWriter(new FileWriter(fileName, APPEND));
+		bw = new BufferedWriter(new FileWriter(input, APPEND));
 		bw.write("14:00\t\n");
 		bw.close();
 		logger.trace("write done");
@@ -207,16 +210,15 @@ class RawObserverTest extends LoggingCheckingTestBase {
 	 * @since 0.1.0
 	 */
 	@Test
-	void test_listener_notifySectionEnded() throws Exception {
+	void test_listener_notifySectionEnded(@TempInputFile String input) throws Exception {
 		logTestStart();
 
-		String fileName = getTempDirectory() + "/file.txt";
-		BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(input));
 		bw.write("2024-01-01\n");
 		bw.write("12:00\t");
 		bw.close();
 
-		observer = new RawObserverImpl(fileName);
+		observer = new RawObserverImpl(input);
 
 		AtomicReference<RawSection> sectionReference = new AtomicReference<>();
 
@@ -230,7 +232,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 
 		observer.register(listener, 1000);
 
-		bw = new BufferedWriter(new FileWriter(fileName, APPEND));
+		bw = new BufferedWriter(new FileWriter(input, APPEND));
 		bw.write("13:00\n");
 		bw.close();
 
@@ -243,16 +245,15 @@ class RawObserverTest extends LoggingCheckingTestBase {
 	 * @since 0.1.0
 	 */
 	@Test
-	void test_listener_notifySectionStarted() throws Exception {
+	void test_listener_notifySectionStarted(@TempInputFile String input) throws Exception {
 		logTestStart();
 
-		String fileName = getTempDirectory() + "/file.txt";
-		BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(input));
 		bw.write("2024-01-01\n");
 		bw.write("12:00\t13:00\n");
 		bw.close();
 
-		observer = new RawObserverImpl(fileName);
+		observer = new RawObserverImpl(input);
 
 		AtomicReference<RawSection> sectionReference = new AtomicReference<>();
 
@@ -266,7 +267,7 @@ class RawObserverTest extends LoggingCheckingTestBase {
 
 		observer.register(listener, 1000);
 
-		bw = new BufferedWriter(new FileWriter(fileName, APPEND));
+		bw = new BufferedWriter(new FileWriter(input, APPEND));
 		bw.write("14:00\t");
 		bw.close();
 
