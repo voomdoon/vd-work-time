@@ -118,13 +118,25 @@ public class Overlay {
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			g.clearRect(0, 0, getWidth(), getHeight());
-			g.setColor(new Color(255, 0, 0, 64));
 			int fintSize = 32;
-			g.setFont(new Font("Arial", Font.BOLD, fintSize));
-			int seconds = calculator.getDaySum(workReference.get(), LocalDate.now(), LocalTime.now());
+			g.setColor(new Color(255, 0, 0, 64));
+			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, fintSize));
+			LocalDate date = LocalDate.now();
+			LocalTime time = LocalTime.now();
+			g.drawString("today: " + formatDuration(calculator.getDaySum(workReference.get(), date, time)), 0,
+					fintSize);
+			g.drawString("week:  " + formatDuration(calculator.getWeekSum(workReference.get(), date, time)), 0,
+					2 * fintSize);
+		}
+
+		/**
+		 * @param seconds
+		 * @return formatted duration
+		 * @since 0.1.0
+		 */
+		private String formatDuration(int seconds) {
 			Duration duration = Duration.ofSeconds(seconds);
-			String value = String.format("%02d:%02d", duration.toHours(), duration.toMinutesPart());
-			g.drawString("today: " + value, 0, fintSize);
+			return String.format("%02d:%02d", duration.toHours(), duration.toMinutesPart());
 		}
 	}
 
