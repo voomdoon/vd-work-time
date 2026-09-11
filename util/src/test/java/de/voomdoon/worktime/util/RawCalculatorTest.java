@@ -110,4 +110,24 @@ class RawCalculatorTest extends TestBase {
 
 		assertThat(actual).isEqualTo(7200);
 	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Test
+	void testWeekSum() throws Exception {
+		logTestStart();
+
+		LocalDate wednesday = LocalDate.of(2024, 3, 6);
+		RawSection oneHour = new RawSection(LocalTime.of(12, 0), LocalTime.of(13, 0), 1);
+		RawWork work = new RawWork(List.of(new RawDay(wednesday.minusDays(3), List.of(oneHour), Set.of(), Set.of()),
+				new RawDay(wednesday.minusDays(2), List.of(oneHour), Set.of(), Set.of()),
+				new RawDay(wednesday.minusDays(1), List.of(oneHour), Set.of(), Set.of()),
+				new RawDay(wednesday, List.of(new RawSection(LocalTime.of(12, 0), null, 1)), Set.of(), Set.of()),
+				new RawDay(wednesday.plusDays(5), List.of(oneHour), Set.of(), Set.of())));
+
+		int actual = summarizer.getWeekSum(work, wednesday, LocalTime.of(14, 0));
+
+		assertThat(actual).isEqualTo(4 * 3600);
+	}
 }
